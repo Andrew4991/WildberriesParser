@@ -16,7 +16,7 @@ namespace Parser.BL.Data.Mapping.Api
                 .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Feedbacks, opt => opt.MapFrom(src => src.Feedbacks))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.PriceU));
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.PriceU % 100 == 0 ? src.PriceU / 100.0 : src.PriceU/100));
         }
     }
 }
