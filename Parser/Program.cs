@@ -40,6 +40,7 @@ namespace Parser
             //DI
             services.AddSingleton<IParserService, ApiParserService>();
             services.AddSingleton<IWorkerService, WorkerService>();
+            services.AddSingleton<IExcelService, ExcelService>();
 
             //autoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
