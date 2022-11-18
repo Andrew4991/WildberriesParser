@@ -24,6 +24,7 @@ namespace Parser
 
         private static IServiceCollection ConfigureServices()
         {
+            //configurations
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
@@ -33,9 +34,15 @@ namespace Parser
                 .AddSingleton<IConfiguration>(configuration)
                 .AddLogging();
 
+            //options
             services.Configure<ApiOptions>(configuration.GetSection(nameof(ApiOptions)));
 
-            services.AddTransient<IParserService, ApiParserService>();
+            //DI
+            services.AddSingleton<IParserService, ApiParserService>();
+            services.AddSingleton<IWorkerService, WorkerService>();
+
+            //autoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }
@@ -46,7 +53,7 @@ namespace Parser
             var parser = scope.ServiceProvider.GetService<IParserService>();
             var gdfg = scope.ServiceProvider.GetService<IOptions<ApiOptions>>().Value;
 
-            var xxc = parser.GetProductsAsync("sd").GetAwaiter().GetResult();
+            var xxc = parser.GetProductsAsync("Игрушки").GetAwaiter().GetResult();
         }
     }
 }

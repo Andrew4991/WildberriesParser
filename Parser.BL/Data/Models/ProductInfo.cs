@@ -12,7 +12,7 @@ namespace Parser.BL.Data.Models
 
         public int Id { get; set; }
 
-        public int FeddBacks { get; set; }
+        public int Feedbacks { get; set; }
 
         public decimal Price { get; set; }
     }

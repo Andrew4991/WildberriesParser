@@ -10,6 +10,9 @@ namespace Parser.BL.Data.Models.Api
         [JsonPropertyName("url")]
         public string Url { get; set; }
 
+        [JsonPropertyName("__tmp")]
+        public string Tmp { get; set; }
+
         [JsonPropertyName("appType")]
         public string AppType { get; set; }
 
