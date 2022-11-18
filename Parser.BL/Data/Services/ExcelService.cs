@@ -65,10 +65,19 @@ namespace Parser.BL.Data.Services
             var ws = package.Workbook.Worksheets.Add(worksheetName);
 
             ws.Cells["A1"].Value = "Title";
+            ws.Column(1).Width = 85;
+
             ws.Cells["B1"].Value = "Brand";
+            ws.Column(2).Width = 30;
+
             ws.Cells["C1"].Value = "Id";
+            ws.Column(3).Width = 15;
+
             ws.Cells["D1"].Value = "Feedbacks";
+            ws.Column(4).Width = 15;
+
             ws.Cells["E1"].Value = "Price";
+            ws.Column(5).Width = 15;
 
             return ws;
         }
