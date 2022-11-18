@@ -1,12 +1,19 @@
-﻿using System;
+﻿using Parser.BL.Data.Interfaces;
+using Parser.BL.Data.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace Parser
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IParserService xx = new ApiParserService();
+
+            var xxc = await xx.GetProductsAsync("sd");
+
+            Console.ReadKey();
         }
     }
 }
