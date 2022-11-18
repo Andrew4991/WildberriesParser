@@ -8,10 +8,14 @@
   <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="Inputs\Keys.txt" />
+    <None Remove="Inputs\SearchKeys.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Inputs\SearchKeys.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -27,10 +31,6 @@
 
   <ItemGroup>
     <Resource Include="Inputs\Keys.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Inputs\" />
   </ItemGroup>
 
 </Project>

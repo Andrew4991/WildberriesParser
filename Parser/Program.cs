@@ -50,10 +50,9 @@ namespace Parser
         private static void Work(IServiceCollection services)
         {
             using var scope = services.BuildServiceProvider().CreateScope();
-            var parser = scope.ServiceProvider.GetService<IParserService>();
-            var gdfg = scope.ServiceProvider.GetService<IOptions<ApiOptions>>().Value;
+            var worker = scope.ServiceProvider.GetService<IWorkerService>();
 
-            var xxc = parser.GetProductsAsync("Игрушки").GetAwaiter().GetResult();
+            worker.RunAsync().GetAwaiter().GetResult();
         }
     }
 }
