@@ -11,7 +11,6 @@ namespace Parser.BL.Data.Services
 {
     public class ExcelService : IExcelService
     {
-
         public void AddWorksheet(FileInfo file, string worksheetName, List<ProductInfo> products)
         {
             using var package = new ExcelPackage(file);

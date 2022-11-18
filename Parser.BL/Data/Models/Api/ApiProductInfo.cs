@@ -74,5 +74,8 @@ namespace Parser.BL.Data.Models.Api
 
         [JsonPropertyName("diffPrice")]
         public bool DiffPrice { get; set; }
+
+        [JsonPropertyName("promoTextCat")]
+        public string PromoTextCat { get; set; }
     }
 }
