@@ -84,7 +84,6 @@ namespace Parser
 
             services.AddSingleton<IWorkerService, WorkerService>();
             services.AddSingleton<IFileService, FileService>();
-            services.AddSingleton<IExcelService, ExcelService>();
 
             //autoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
