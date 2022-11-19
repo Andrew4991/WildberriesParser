@@ -10,22 +10,17 @@ namespace Parser.BL.Data.Models.Api
         [JsonPropertyName("ksort")]
         public int KSort { get; set; }
 
-
         [JsonPropertyName("ksale")]
         public int KSale { get; set; }
-
 
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-
         [JsonPropertyName("root")]
         public int Root { get; set; }
 
-
         [JsonPropertyName("kindId")]
         public int KindId { get; set; }
-
 
         [JsonPropertyName("subjectId")]
         public int SubjectId { get; set; }
