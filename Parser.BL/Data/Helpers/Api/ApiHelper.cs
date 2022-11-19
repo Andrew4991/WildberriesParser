@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Parser.BL.Data.Exceptions;
+using System.Net;
 
 namespace Parser.BL.Data.Helpers.Api
 {
@@ -81,6 +82,11 @@ namespace Parser.BL.Data.Helpers.Api
 
                 var pageRequestJson = new StringContent(JsonSerializer.Serialize(pageRequestData));
                 var response = await client.PostAsync(urlPhantomJsCloud, pageRequestJson);
+
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new Exception("PhantomJsCloud error");
+                }
 
                 var pageDocument = new HtmlDocument();
                 pageDocument.LoadHtml(response.Content.ReadAsStringAsync().Result);

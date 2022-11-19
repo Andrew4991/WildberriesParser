@@ -26,9 +26,7 @@ namespace Parser
 
                 var services = ConfigureServices();
 
-                Work(services);
-
-                Console.WriteLine("Программа завершила работу");                
+                Work(services);                             
             }            
             catch (InputFileException e)
             {
@@ -56,6 +54,7 @@ namespace Parser
                 Console.WriteLine("Произошла неизвестная ошибка");
             }
 
+            Console.WriteLine("Программа завершила работу");
             Console.ReadKey();
         }
 
