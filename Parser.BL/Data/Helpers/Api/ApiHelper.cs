@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Parser.BL.Data.Exceptions;
 
 namespace Parser.BL.Data.Helpers.Api
 {
@@ -25,8 +26,7 @@ namespace Parser.BL.Data.Helpers.Api
             }
             catch (Exception e)
             {
-                var message = $"error: {e.Message}, url: {url}";
-                throw new Exception(message, e);
+                throw new ApiErrorException(url, e);
             }
         }
 
@@ -46,8 +46,7 @@ namespace Parser.BL.Data.Helpers.Api
             }
             catch (Exception e)
             {
-                var message = $"error: {e.Message}, url: {url}";
-                throw new Exception(message, e);
+                throw new ApiErrorException(url, e);
             }
         }
 
@@ -74,8 +73,7 @@ namespace Parser.BL.Data.Helpers.Api
             }
             catch (Exception e)
             {
-                var message = $"error: {e.Message}, url: {url}";
-                throw new Exception(message, e);
+                throw new ApiErrorException(url, e);
             }
         }
     }

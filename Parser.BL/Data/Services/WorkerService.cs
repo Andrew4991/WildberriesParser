@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Parser.BL.Data.Exceptions;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
 using Parser.BL.Data.Models.Options;
@@ -31,39 +32,60 @@ namespace Parser.BL.Data.Services
 
             var outFile = GetOutputFileInfoWithCheck();
 
-            foreach (var key in uniqueKeys)
+            try
             {
-                var products = await _parserService.GetProductsAsync(key);
-                var transfer = new ExcelTransferService<ProductInfo>(outFile, key);
+                foreach (var key in uniqueKeys)
+                {
+                    var products = await _parserService.GetProductsAsync(key);
+                    var transfer = new ExcelTransferService<ProductInfo>(outFile, key);
 
-                transfer.Transfer(products);
+                    transfer.Transfer(products);
+                }
             }
+            catch (Exception e)
+            {
+                throw new ParserException(string.Empty, e);
+            }            
         }
 
         private async Task<HashSet<string>> GetKeywords()
         {
-            var line = default(string);
-            var uniqueKeys = new HashSet<string>();
-
-            //read keywords from file
-            using StreamReader reader = new StreamReader(_options.Value.InputFileName);
-            while ((line = await reader.ReadLineAsync()) != null)
+            try
             {
-                uniqueKeys.Add(line.Trim());
-            }
+                var line = default(string);
+                var uniqueKeys = new HashSet<string>();
 
-            return uniqueKeys;
+                //read keywords from file
+                using StreamReader reader = new StreamReader(_options.Value.InputFileName);
+                while ((line = await reader.ReadLineAsync()) != null)
+                {
+                    uniqueKeys.Add(line.Trim());
+                }
+
+                return uniqueKeys;
+            }
+            catch (Exception e)
+            {
+                throw new InputFileException(string.Empty, e);
+            }
+            
         }
 
         private FileInfo GetOutputFileInfoWithCheck()
         {
-            var outFile = new FileInfo(_options.Value.OutputFileName);
+            try
+            {
+                var outFile = new FileInfo(_options.Value.OutputFileName);
+                //check directory and old file
+                _fileService.CreateDirectory(_options.Value.OutputFileName);
+                _fileService.DeleteFile(outFile);
 
-            //check directory and old file
-            _fileService.CreateDirectory(_options.Value.OutputFileName);
-            _fileService.DeleteFile(outFile);
-
-            return outFile;
+                return outFile;
+            }
+            catch (Exception e)
+            {
+                throw new OutputFileException(string.Empty, e);
+            }                  
         }
     }
 }
