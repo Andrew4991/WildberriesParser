@@ -36,6 +36,11 @@ namespace Parser.BL.Data.Services
             return _mapper.Map<IEnumerable<ProductInfo>>(apiSearchInfo?.Data?.Products?.Where(x => x.PromoTextCat?.Trim().ToLower() != _options.Value.AdsName));
         }
 
+        /// <summary>
+        /// Genereted base url for api
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         private string GetBaseUrl(ApiOptions options)
         {
             var urlBuilder = new StringBuilder(options.Url);

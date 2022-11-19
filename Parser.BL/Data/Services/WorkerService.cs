@@ -45,6 +45,10 @@ namespace Parser.BL.Data.Services
             }            
         }
 
+        /// <summary>
+        /// Read input file and get keywords
+        /// </summary>
+        /// <returns></returns>
         private async Task<HashSet<string>> GetKeywords()
         {
             try
@@ -65,9 +69,12 @@ namespace Parser.BL.Data.Services
             {
                 throw new InputFileException(string.Empty, e);
             }
-            
         }
 
+        /// <summary>
+        /// Create ouput directories and delete old file
+        /// </summary>
+        /// <returns></returns>
         private FileInfo GetOutputFileInfoWithCheck()
         {
             try

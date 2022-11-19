@@ -1,11 +1,11 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.Extensions.Options;
 using Parser.BL.Data.Extensions;
+using Parser.BL.Data.Helpers.Api;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
 using Parser.BL.Data.Models.Options;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,12 +25,7 @@ namespace Parser.BL.Data.Services
 
         public async Task<IEnumerable<ProductInfo>> GetProductsAsync(string productName)
         {
-            using StreamReader reader = new StreamReader("Inputs\\Text.txt");
-            var text = reader.ReadToEnd();
-            var page = new HtmlDocument();
-            page.LoadHtml(text);
-
-            //var page = await ApiHelper.GetHtmlDocumentByPhantomJsCloud(_options.Value.SearchProductsUrl + productName, _options.Value.PhantomJsCloudOptions.FullUrl);
+            var page = await ApiHelper.GetHtmlDocumentByPhantomJsCloud(_options.Value.SearchProductsUrl + productName, _options.Value.PhantomJsCloudOptions.FullUrl);
             var blokProductList = GetProductListNode(page.DocumentNode);
 
             if (blokProductList == null) return new List<ProductInfo>();
@@ -47,6 +42,11 @@ namespace Parser.BL.Data.Services
                 });
         }
 
+        /// <summary>
+        /// Return node for products
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
         private HtmlNode GetProductListNode(HtmlNode document)
         {
             return document.SelectSingleNode(
@@ -55,6 +55,11 @@ namespace Parser.BL.Data.Services
                 _options.Value.HtmlParserOptions.CardList.Class)); ;
         }
 
+        /// <summary>
+        /// Check is ads
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private bool IsAdsProduct(HtmlNode item)
         {
             return item.HasClass(_options.Value.HtmlParserOptions.AdvertClassName)
@@ -64,11 +69,21 @@ namespace Parser.BL.Data.Services
                         _options.Value.HtmlParserOptions.Promo.Class))?.InnerText == _options.Value.LowerAdsName;
         }
 
+        /// <summary>
+        ///  Return product id
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private int GetProductId(HtmlNode item)
         {
             return item.Attributes.FirstOrDefault(y => y.Name == _options.Value.HtmlParserOptions.IdAttributeName).Value.ToInt();
         }
 
+        /// <summary>
+        /// Return brand
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private string GetProductBrand(HtmlNode item)
         {
             return item.SelectSingleNode(
@@ -77,6 +92,11 @@ namespace Parser.BL.Data.Services
                         _options.Value.HtmlParserOptions.Brand.Class))?.InnerText;
         }
 
+        /// <summary>
+        /// Return title 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private string GetProductTitle(HtmlNode item)
         {
             return item.SelectSingleNode(
@@ -85,6 +105,11 @@ namespace Parser.BL.Data.Services
                         _options.Value.HtmlParserOptions.Title.Class))?.InnerText;
         }
 
+        /// <summary>
+        /// Return count feedbacks
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private int GetProductFeedbacks(HtmlNode item)
         {
             return item.SelectSingleNode(
@@ -93,6 +118,11 @@ namespace Parser.BL.Data.Services
                         _options.Value.HtmlParserOptions.Feedbacks.Class))?.InnerText?.ToInt() ?? 0;
         }
 
+        /// <summary>
+        /// Return amount
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private decimal GetProductPrice(HtmlNode item)
         {
             return (item.SelectSingleNode(

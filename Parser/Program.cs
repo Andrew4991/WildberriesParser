@@ -12,6 +12,10 @@ namespace Parser
 {
     class Program
     {
+        /// <summary>
+        /// Start programm
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             Logger log = LogManager.GetCurrentClassLogger();
@@ -55,6 +59,10 @@ namespace Parser
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Startup. Inject DI
+        /// </summary>
+        /// <returns></returns>
         private static IServiceCollection ConfigureServices()
         {
             //configurations
@@ -91,6 +99,10 @@ namespace Parser
             return services;
         }
 
+        /// <summary>
+        /// run worker
+        /// </summary>
+        /// <param name="services"> need to get service from DI</param>
         private static void Work(IServiceCollection services)
         {
             using var scope = services.BuildServiceProvider().CreateScope();

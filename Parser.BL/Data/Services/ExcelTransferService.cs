@@ -35,11 +35,21 @@ namespace Parser.BL.Data.Services
             package.Save();
         }
 
+        /// <summary>
+        /// Create new worksheet by name
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
         private ExcelWorksheet CreateWorksheet(ExcelPackage package)
         {
             return package.Workbook.Worksheets.Add(_worksheetName);
         }
 
+        /// <summary>
+        /// Set default header 
+        /// </summary>
+        /// <param name="ws"></param>
+        /// <param name="index"></param>
         private void SetHeader(ExcelWorksheet ws, int index)
         {
             PropertyInfo[] propertyInfos = typeof(T).GetProperties();
@@ -51,6 +61,12 @@ namespace Parser.BL.Data.Services
             }
         }
 
+        /// <summary>
+        /// Set data from collection
+        /// </summary>
+        /// <param name="ws"></param>
+        /// <param name="objects"></param>
+        /// <param name="index"></param>
         private void SetData(ExcelWorksheet ws, IEnumerable<T> objects, int index)
         {
             PropertyInfo[] propertyInfos = typeof(T).GetProperties();

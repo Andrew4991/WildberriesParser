@@ -10,6 +10,12 @@ namespace Parser.BL.Data.Helpers.Api
 {
     public static class ApiHelper
     {
+        /// <summary>
+        /// Method for get model by api
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async Task<T> GetAsync<T>(string url)
         {
             try
@@ -28,6 +34,11 @@ namespace Parser.BL.Data.Helpers.Api
             }
         }
 
+        /// <summary>
+        /// Method for get html document
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async Task<HtmlDocument> GetHtmlDocumentAsync(string url)
         {
             try
@@ -48,6 +59,12 @@ namespace Parser.BL.Data.Helpers.Api
             }
         }
 
+        /// <summary>
+        /// Method for get html document with waitting render scripts
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="urlPhantomJsCloud"></param>
+        /// <returns></returns>
         public static async Task<HtmlDocument> GetHtmlDocumentByPhantomJsCloud(string url, string urlPhantomJsCloud)
         {
             try
