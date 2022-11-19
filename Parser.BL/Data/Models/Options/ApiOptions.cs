@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace Parser.BL.Data.Models.Api
+namespace Parser.BL.Data.Models.Options
 {
     public class ApiOptions
     {

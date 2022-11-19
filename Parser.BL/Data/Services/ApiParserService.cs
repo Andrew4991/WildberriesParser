@@ -5,6 +5,7 @@ using Parser.BL.Data.Helpers.Api;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
 using Parser.BL.Data.Models.Api;
+using Parser.BL.Data.Models.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;

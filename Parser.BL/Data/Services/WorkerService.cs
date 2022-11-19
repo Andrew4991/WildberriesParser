@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
+using Parser.BL.Data.Models.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,12 +16,14 @@ namespace Parser.BL.Data.Services
         private readonly IParserService _parserService;
         private readonly IExcelService _excelService;
         private readonly IConfiguration _configuration;
+        private readonly IOptions<ProjectOptions> _options;
 
-        public WorkerService(IParserService parserService, IConfiguration configuration, IExcelService excelService)
+        public WorkerService(IParserService parserService, IConfiguration configuration, IExcelService excelService, IOptions<ProjectOptions> options)
         {
             _parserService = parserService;
             _configuration = configuration;
             _excelService = excelService;
+            _options = options;
         }
 
         public async Task RunAsync()
@@ -27,12 +31,10 @@ namespace Parser.BL.Data.Services
             var line = default(string);
             var products = new List<ProductInfo>(100);
 
-            var inputPath = _configuration["InputFileName"];
-            var outPath = _configuration["OutputFileName"];
-            var outFile = new FileInfo(outPath);
-            using StreamReader reader = new StreamReader(inputPath);
+            var outFile = new FileInfo(_options.Value.OutputFileName);
+            using StreamReader reader = new StreamReader(_options.Value.InputFileName);
 
-            _excelService.CreateDirectory(outPath);
+            _excelService.CreateDirectory(_options.Value.OutputFileName);
             _excelService.DeleteOldFile(outFile);
 
             while ((line = await reader.ReadLineAsync()) != null)

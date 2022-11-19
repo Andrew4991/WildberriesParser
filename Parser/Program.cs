@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models.Api;
+using Parser.BL.Data.Models.Options;
 using Parser.BL.Data.Services;
 using System;
 using System.IO;
@@ -35,10 +36,11 @@ namespace Parser
                 .AddLogging();
 
             //options
-            services.Configure<ApiOptions>(configuration.GetSection(nameof(ApiOptions)));
+            services.Configure<ProjectOptions>(configuration.GetSection(nameof(ProjectOptions)));
 
             //DI
-            services.AddSingleton<IParserService, ApiParserService>();
+            //services.AddSingleton<IParserService, ApiParserService>();
+            services.AddSingleton<IParserService, HtmlParserService>();
             services.AddSingleton<IWorkerService, WorkerService>();
             services.AddSingleton<IExcelService, ExcelService>();
 
