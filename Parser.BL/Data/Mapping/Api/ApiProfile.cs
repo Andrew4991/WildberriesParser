@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Parser.BL.Data.Models;
 using Parser.BL.Data.Models.Api;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Parser.BL.Data.Mapping.Api
 {

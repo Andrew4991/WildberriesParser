@@ -1,8 +1,6 @@
 ﻿using Parser.BL.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Parser.BL.Data.Interfaces
 {

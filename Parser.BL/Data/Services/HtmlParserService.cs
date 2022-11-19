@@ -1,22 +1,13 @@
-﻿using AutoMapper;
-using HtmlAgilityPack;
-using Microsoft.Extensions.Configuration;
+﻿using HtmlAgilityPack;
 using Microsoft.Extensions.Options;
 using Parser.BL.Data.Extensions;
-using Parser.BL.Data.Helpers.Api;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
-using Parser.BL.Data.Models.Api;
 using Parser.BL.Data.Models.Options;
-using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Parser.BL.Data.Services
 {

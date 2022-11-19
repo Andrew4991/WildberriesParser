@@ -7,12 +7,10 @@ using Parser.BL.Data.Models;
 using Parser.BL.Data.Models.Api;
 using Parser.BL.Data.Models.Options;
 using Parser.BL.Data.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Parser.BL.Data.Services
 {

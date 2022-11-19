@@ -1,11 +1,9 @@
 ﻿using OfficeOpenXml;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Parser.BL.Data.Services
 {

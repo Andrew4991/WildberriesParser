@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Parser.BL.Data.Exceptions;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
@@ -7,8 +6,6 @@ using Parser.BL.Data.Models.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Parser.BL.Data.Services

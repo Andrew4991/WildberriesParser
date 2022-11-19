@@ -1,16 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using NLog;
 using Parser.BL.Data.Exceptions;
 using Parser.BL.Data.Interfaces;
-using Parser.BL.Data.Models.Api;
 using Parser.BL.Data.Models.Options;
 using Parser.BL.Data.Services;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Parser
 {
