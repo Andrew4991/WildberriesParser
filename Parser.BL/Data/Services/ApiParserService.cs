@@ -6,6 +6,7 @@ using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models;
 using Parser.BL.Data.Models.Api;
 using Parser.BL.Data.Models.Options;
+using Parser.BL.Data.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,27 +19,45 @@ namespace Parser.BL.Data.Services
     public class ApiParserService : IParserService
     {
         private readonly string _baseUrl;
-        private readonly string _discountName;
 
         private readonly IMapper _mapper;
+        private readonly IOptions<ProjectOptions> _options;
 
-        public ApiParserService(IOptions<ApiOptions> options, IMapper mapper, IConfiguration configuration)
+        public ApiParserService(IOptions<ProjectOptions> options, IMapper mapper, IConfiguration configuration)
         {
-            _baseUrl = $"{options.Value.Url}?__tmp={options.Value.Tmp}&appType={options.Value.AppType}&couponsGeo={options.Value.CouponsGeo}" +
-            $"&curr={options.Value.Curr}&dest={options.Value.Dest}&emp={options.Value.Emp}&lang={options.Value.Lang}&locale={options.Value.Locale}" +
-            $"&pricemarginCoeff={options.Value.PricemarginCoeff}&reg={options.Value.Reg}&regions={options.Value.Regions}&resultset={options.Value.Resultset}" +
-            $"&sort={options.Value.Sort}&spp={options.Value.Spp}&suppressSpellcheck={options.Value.SuppressSpellcheck}&query=";
-
-            _discountName = configuration["DiscountName"]?.Trim().ToLower();
+            _baseUrl = GetBaseUrl(options.Value.ApiOptions);
 
             _mapper = mapper;
+            _options = options;
         }
 
-        public async Task<List<ProductInfo>> GetProductsAsync(string productName)
+        public async Task<IEnumerable<ProductInfo>> GetProductsAsync(string productName)
         {
             var apiSearchInfo = await ApiHelper.GetAsync<ApiSearchInfo>(_baseUrl + productName);
 
-            return _mapper.Map<List<ProductInfo>>(apiSearchInfo?.Data?.Products?.Where(x => x.PromoTextCat?.Trim().ToLower() != _discountName));
+            return _mapper.Map<IEnumerable<ProductInfo>>(apiSearchInfo?.Data?.Products?.Where(x => x.PromoTextCat?.Trim().ToLower() != _options.Value.AdsName));
+        }
+
+        private string GetBaseUrl(ApiOptions options)
+        {
+            var urlBuilder = new StringBuilder(options.Url);
+
+            return  urlBuilder.SetQueryParam("__tmp", options.Tmp)
+                .SetQueryParam("appType", options.AppType)
+                .SetQueryParam("couponsGeo", options.CouponsGeo)
+                .SetQueryParam("curr", options.Curr)
+                .SetQueryParam("dest", options.Dest)
+                .SetQueryParam("emp", options.Emp)
+                .SetQueryParam("lang", options.Lang)
+                .SetQueryParam("locale", options.Locale)
+                .SetQueryParam("pricemarginCoeff", options.PricemarginCoeff)
+                .SetQueryParam("reg", options.Reg)
+                .SetQueryParam("regions", options.Regions)
+                .SetQueryParam("resultset", options.Resultset)
+                .SetQueryParam("sort", options.Sort)
+                .SetQueryParam("spp", options.Spp)
+                .SetQueryParam("suppressSpellcheck", options.SuppressSpellcheck.ToString())
+                .ToString() + "&query=";
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Parser.BL.Data.Services
 {
     public class ExcelService : IExcelService
     {
-        public void AddWorksheet(FileInfo file, string worksheetName, List<ProductInfo> products)
+        public void AddWorksheet(FileInfo file, string worksheetName, IEnumerable<ProductInfo> products)
         {
             using var package = new ExcelPackage(file);
 
@@ -32,31 +32,6 @@ namespace Parser.BL.Data.Services
             }
 
             package.Save();
-        }
-
-        public void DeleteOldFile(FileInfo file)
-        {
-            if (file.Exists)
-            {
-                file.Delete();
-            }
-        }
-
-        public void CreateDirectory(string fullPath)
-        {
-            var dir = fullPath.Split("/").ToList();
-            dir.RemoveAt(dir.Count - 1);
-
-            string fulldir = "";
-            foreach (var part in dir)
-            {
-                fulldir += (string.IsNullOrEmpty(fulldir) ? "" : "\\") + part;
-
-                if (!Directory.Exists(fulldir))
-                {
-                    Directory.CreateDirectory(fulldir);
-                }
-            }
         }
 
         private ExcelWorksheet CreateWorksheet(ExcelPackage package, string worksheetName)

@@ -15,7 +15,7 @@ namespace Parser.BL.Data.Models.Options
 
         public string OutputFileName { get; set; }
 
-        public string DiscountName { get; set; }
+        public string AdsName { get; set; }
 
         public PhantomJsCloudOptions PhantomJsCloudOptions { get; set; }
        
@@ -24,6 +24,6 @@ namespace Parser.BL.Data.Models.Options
         public HtmlParserOptions HtmlParserOptions { get; set; }
 
         [NotMapped]
-        public string LowerDiscountName => DiscountName?.Trim().ToLower();
+        public string LowerAdsName => AdsName?.Trim().ToLower();
     }
 }

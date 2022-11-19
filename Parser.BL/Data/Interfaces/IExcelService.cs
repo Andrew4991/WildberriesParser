@@ -8,10 +8,6 @@ namespace Parser.BL.Data.Interfaces
 {
     public interface IExcelService
     {
-        void AddWorksheet(FileInfo file, string worksheetName, List<ProductInfo> products);
-
-        void DeleteOldFile(FileInfo file);
-
-        void CreateDirectory(string fullPath);
+        void AddWorksheet(FileInfo file, string worksheetName, IEnumerable<ProductInfo> products);
     }
 }

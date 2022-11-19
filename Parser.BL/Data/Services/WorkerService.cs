@@ -6,6 +6,7 @@ using Parser.BL.Data.Models.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,36 +16,58 @@ namespace Parser.BL.Data.Services
     {
         private readonly IParserService _parserService;
         private readonly IExcelService _excelService;
-        private readonly IConfiguration _configuration;
+        private readonly IFileService _fileService;
         private readonly IOptions<ProjectOptions> _options;
 
-        public WorkerService(IParserService parserService, IConfiguration configuration, IExcelService excelService, IOptions<ProjectOptions> options)
+        public WorkerService(IParserService parserService, IExcelService excelService, IOptions<ProjectOptions> options, IFileService fileService)
         {
             _parserService = parserService;
-            _configuration = configuration;
             _excelService = excelService;
             _options = options;
+            _fileService = fileService;
         }
 
         public async Task RunAsync()
+        {            
+            var uniqueKeys = await GetKeywords();     
+
+            var outFile = GetOutputFileInfoWithCheck();
+
+            foreach (var key in uniqueKeys)
+            {
+                var products = await _parserService.GetProductsAsync(key);
+                var transfer = new ExcelTransferService<ProductInfo>(outFile, key);
+
+                transfer.Transfer(products);
+
+                //_excelService.AddWorksheet(outFile, key, products.ToList());
+            }
+        }
+
+        private async Task<HashSet<string>> GetKeywords()
         {
             var line = default(string);
-            var products = new List<ProductInfo>(100);
+            var uniqueKeys = new HashSet<string>();
 
-            var outFile = new FileInfo(_options.Value.OutputFileName);
+            //read keywords from file
             using StreamReader reader = new StreamReader(_options.Value.InputFileName);
-
-            _excelService.CreateDirectory(_options.Value.OutputFileName);
-            _excelService.DeleteOldFile(outFile);
-
             while ((line = await reader.ReadLineAsync()) != null)
             {
-                line = line.Trim();
-
-                products = await _parserService.GetProductsAsync(line);
-
-                _excelService.AddWorksheet(outFile, line, products);
+                uniqueKeys.Add(line.Trim());
             }
+
+            return uniqueKeys;
+        }
+
+        private FileInfo GetOutputFileInfoWithCheck()
+        {
+            var outFile = new FileInfo(_options.Value.OutputFileName);
+
+            //check directory and old file
+            _fileService.CreateDirectory(_options.Value.OutputFileName);
+            _fileService.DeleteFile(outFile);
+
+            return outFile;
         }
     }
 }

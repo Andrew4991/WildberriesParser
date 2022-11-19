@@ -8,6 +8,6 @@ namespace Parser.BL.Data.Interfaces
 {
     public interface IParserService
     {
-        Task<List<ProductInfo>> GetProductsAsync(string productName);
+        Task<IEnumerable<ProductInfo>> GetProductsAsync(string productName);
     }
 }

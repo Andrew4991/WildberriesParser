@@ -8,6 +8,6 @@ namespace Parser.BL.Data.Models.Api
     public class ApiSearchDataInfo
     {
         [JsonPropertyName("products")]
-        public List<ApiProductInfo> Products { get; set; }
+        public IEnumerable<ApiProductInfo> Products { get; set; }
     }
 }

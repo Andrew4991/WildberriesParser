@@ -37,11 +37,21 @@ namespace Parser
 
             //options
             services.Configure<ProjectOptions>(configuration.GetSection(nameof(ProjectOptions)));
+            var projectOptions = configuration.GetSection(nameof(ProjectOptions)).Get<ProjectOptions>();
 
             //DI
-            //services.AddSingleton<IParserService, ApiParserService>();
-            services.AddSingleton<IParserService, HtmlParserService>();
+            //check type of parser
+            if (projectOptions.UseApiParser)
+            {
+                services.AddSingleton<IParserService, ApiParserService>();
+            }
+            else
+            {
+                services.AddSingleton<IParserService, HtmlParserService>();
+            }
+
             services.AddSingleton<IWorkerService, WorkerService>();
+            services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<IExcelService, ExcelService>();
 
             //autoMapper
