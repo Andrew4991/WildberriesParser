@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using Parser.BL.Data.Attributes;
 using Parser.BL.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,8 @@ namespace Parser.BL.Data.Services
             for (int row = 0; row < propertyInfos.Length; row++)
             {
                 ws.Cells[index, row + 1].Value = propertyInfos[row].Name;
+                ws.Column(row + 1).Width = (double)propertyInfos[row].CustomAttributes
+                    .FirstOrDefault(x => x.AttributeType == typeof(WidthExcelCellAttribute)).ConstructorArguments.FirstOrDefault().Value;
             }
         }
 

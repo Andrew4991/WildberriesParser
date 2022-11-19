@@ -15,14 +15,12 @@ namespace Parser.BL.Data.Services
     public class WorkerService : IWorkerService
     {
         private readonly IParserService _parserService;
-        private readonly IExcelService _excelService;
         private readonly IFileService _fileService;
         private readonly IOptions<ProjectOptions> _options;
 
-        public WorkerService(IParserService parserService, IExcelService excelService, IOptions<ProjectOptions> options, IFileService fileService)
+        public WorkerService(IParserService parserService, IOptions<ProjectOptions> options, IFileService fileService)
         {
             _parserService = parserService;
-            _excelService = excelService;
             _options = options;
             _fileService = fileService;
         }
@@ -39,8 +37,6 @@ namespace Parser.BL.Data.Services
                 var transfer = new ExcelTransferService<ProductInfo>(outFile, key);
 
                 transfer.Transfer(products);
-
-                //_excelService.AddWorksheet(outFile, key, products.ToList());
             }
         }
 
