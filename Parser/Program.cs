@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using NLog;
 using Parser.BL.Data.Exceptions;
 using Parser.BL.Data.Interfaces;
 using Parser.BL.Data.Models.Api;
@@ -17,6 +18,8 @@ namespace Parser
     {
         static void Main(string[] args)
         {
+            Logger log = LogManager.GetCurrentClassLogger();
+
             try
             {
                 Console.WriteLine("Программа запущена");
@@ -25,26 +28,31 @@ namespace Parser
 
                 Work(services);
 
-                Console.WriteLine("Программа завершила работу");
+                Console.WriteLine("Программа завершила работу");                
             }            
             catch (InputFileException e)
             {
+                log.Error(e.StackTrace);
                 Console.WriteLine("Произошла ошибка при чтении входного файла");
             }
             catch (OutputFileException e)
             {
+                log.Error(e.StackTrace);
                 Console.WriteLine("Произошла ошибка при работе с выходным файлом");
             }
             catch (ParserException e)
             {
+                log.Error(e.StackTrace);
                 Console.WriteLine("Произошла ошибка при работе парсера");
             }
             catch (ApiErrorException e)
             {
+                log.Error(e.StackTrace);
                 Console.WriteLine($"Произошла ошибка получения данных: {e.Message}");
             }
             catch (Exception e)
             {
+                log.Error(e.StackTrace);
                 Console.WriteLine("Произошла неизвестная ошибка");
             }
 
